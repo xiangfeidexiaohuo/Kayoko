@@ -49,7 +49,7 @@ static void override_UIKeyboardAutocorrectionController_setAutocorrectionList(UI
  * @return The list of custom items.
  */
 static TIAutocorrectionList* createAutocorrectionList() {
-    NSArray* labels = @[@"History", @"Copy", @"Paste"];
+    NSArray* labels = @[@"历史", @"复制", @"粘贴"];
     NSMutableArray* candidates = [[NSMutableArray alloc] init];
     for (NSString* label in labels) {
         TIZephyrCandidate* candidate = [[objc_getClass("TIZephyrCandidate") alloc] init];
@@ -74,9 +74,9 @@ static TIAutocorrectionList* createAutocorrectionList() {
 static void (* orig_UIPredictionViewController_predictionView_didSelectCandidate)(UIPredictionViewController* self, SEL _cmd, TUIPredictionView* predictionView, TIZephyrCandidate* candidate);
 static void override_UIPredictionViewController_predictionView_didSelectCandidate(UIPredictionViewController* self, SEL _cmd, TUIPredictionView* predictionView, TIZephyrCandidate* candidate) {
     if ([candidate respondsToSelector:@selector(fromBundleId)] && [[candidate fromBundleId] isEqualToString:@"codes.aurora.kayoko"]) {
-        if ([[candidate label] isEqualToString:@"History"]) {
+        if ([[candidate label] isEqualToString:@"历史"]) {
             CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)kNotificationKeyCoreShow, nil, nil, YES);
-        } else if ([[candidate label] isEqualToString:@"Copy"]) {
+        } else if ([[candidate label] isEqualToString:@"复制"]) {
             if (@available(iOS 15.0, *)) {
                 UIKBInputDelegateManager* delegateManager = [[objc_getClass("UIKeyboardImpl") activeInstance] inputDelegateManager];
                 UITextRange* range = [delegateManager selectedTextRange];
@@ -94,7 +94,7 @@ static void override_UIPredictionViewController_predictionView_didSelectCandidat
                     [[UIPasteboard generalPasteboard] setString:text];
                 }
             }
-        } else if ([[candidate label] isEqualToString:@"Paste"]) {
+        } else if ([[candidate label] isEqualToString:@"粘贴"]) {
             paste();
         }
     } else {
@@ -266,6 +266,55 @@ static void load_preferences() {
     pfAutomaticallyPaste = [[preferences objectForKey:kPreferenceKeyAutomaticallyPaste] boolValue];
 }
 
+
+%group DictationAppearance
+
+%hook UIKeyboardDockItem
+
+- (id)initWithImageName:(NSString *)arg1 identifier:(id)arg2 {
+    if ([arg1 isEqualToString:@"mic"])
+        return %orig(@"doc.richtext", arg2);
+    else if ([arg1 isEqualToString:@"mic.fill"])
+        return %orig(@"doc.richtext.fill", arg2);
+    else if ([arg1 isEqualToString:@"globe"])
+        return %orig(@"globe.asia.australia", arg2);
+    else if ([arg1 isEqualToString:@"globe.fill"])
+        return %orig(@"globe.asia.australia.fill", arg2);
+    return %orig;
+}
+
+- (void)setImageName:(NSString *)arg1 {
+    if ([arg1 isEqualToString:@"mic"])
+        return %orig(@"doc.richtext");
+    else if ([arg1 isEqualToString:@"mic.fill"])
+        return %orig(@"doc.richtext.fill");
+    else if ([arg1 isEqualToString:@"globe"])
+        return %orig(@"globe.asia.australia");
+    else if ([arg1 isEqualToString:@"globe.fill"])
+        return %orig(@"globe.asia.australia.fill");
+    return %orig;
+}
+
+%end
+
+%hook UIKeyboardDockItemButton
+
+- (CGRect)imageRectForContentRect:(CGRect)arg1 {
+    CGRect origRect = %orig;
+    if (ABS(origRect.size.width - origRect.size.height) > 1.0) {
+        // adjust image to its 83% but keep its center
+        CGSize newSize = CGSizeMake(origRect.size.width * 1, origRect.size.height * 1);
+        CGPoint newOrigin = CGPointMake(origRect.origin.x + (origRect.size.width - newSize.width) / 2, origRect.origin.y + (origRect.size.height - newSize.height) / 2);
+        return CGRectMake(newOrigin.x, newOrigin.y, newSize.width, newSize.height);
+    }
+    return origRect;
+}
+
+%end
+
+%end
+
+
 #pragma mark - Constructor
 
 /**
@@ -331,7 +380,9 @@ __attribute((constructor)) static void initialize() {
     MSHookMessageEx(objc_getClass("UIKeyboardLayoutStar"), @selector(didMoveToWindow), (IMP)&override_UIKeyboardLayoutStar_didMoveToWindow, (IMP *)&orig_UIKeyboardLayoutStar_didMoveToWindow);
     MSHookMessageEx(objc_getClass("UIKeyboardImpl"), @selector(applicationDidBecomeActive:), (IMP)&override_UIKeyboardImpl_applicationDidBecomeActive, (IMP *)&orig_UIKeyboardImpl_applicationDidBecomeActive);
     MSHookMessageEx(objc_getClass("UIKeyboardImpl"), @selector(applicationWillResignActive:), (IMP)&override_UIKeyboardImpl_applicationWillResignActive, (IMP *)&orig_UIKeyboardImpl_applicationWillResignActive);
-
+    if (@available(iOS 15.0, *)) {
+        %init(DictationAppearance);
+    }
     if (pfAutomaticallyPaste) {
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)paste, (CFStringRef)kNotificationKeyHelperPaste, NULL, (CFNotificationSuspensionBehavior)kNilOptions);
     }

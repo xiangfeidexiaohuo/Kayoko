@@ -70,7 +70,7 @@
 
         [self setFavoritesButton:[[UIButton alloc] init]];
         [[self favoritesButton] addTarget:self action:@selector(handleFavoritesButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-        [self updateStyleForHeaderButton:[self favoritesButton] withImageName:@"heart" andImageSize:kFavoritesButtonImageSize andTintColor:[UIColor labelColor]];
+        [self updateStyleForHeaderButton:[self favoritesButton] withImageName:@"star" andImageSize:kFavoritesButtonImageSize andTintColor:[UIColor labelColor]];
         [[self headerView] addSubview:[self favoritesButton]];
 
         [[self favoritesButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -81,7 +81,7 @@
 
 
         [self setTitleLabel:[[UILabel alloc] init]];
-        [[self titleLabel] setText:@"History"];
+        [[self titleLabel] setText:@"历史"];
         [[self titleLabel] setFont:[UIFont systemFontOfSize:26 weight:UIFontWeightSemibold]];
         [[self titleLabel] setTextColor:[UIColor labelColor]];
         [[self headerView] addSubview:[self titleLabel]];
@@ -105,7 +105,7 @@
         ]];
 
 
-        [self setHistoryTableView:[[KayokoHistoryTableView alloc] initWithName:@"History"]];
+        [self setHistoryTableView:[[KayokoHistoryTableView alloc] initWithName:@"历史"]];
         [self addSubview:[self historyTableView]];
 
         [[self historyTableView] setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -117,7 +117,7 @@
         ]];
 
 
-        [self setFavoritesTableView:[[KayokoFavoritesTableView alloc] initWithName:@"Favorites"]];
+        [self setFavoritesTableView:[[KayokoFavoritesTableView alloc] initWithName:@"收藏"]];
         [[self favoritesTableView] setHidden:YES];
         [self addSubview:[self favoritesTableView]];
 
@@ -132,7 +132,7 @@
         ]];
 
 
-        [self setPreviewView:[[KayokoPreviewView alloc] initWithName:@"Preview"]];
+        [self setPreviewView:[[KayokoPreviewView alloc] initWithName:@"预览"]];
         [[self previewView] setHidden:YES];
         [self addSubview:[self previewView]];
 
@@ -217,14 +217,14 @@
 
         [self showContentView:[self historyTableView] andHideContentView:[self favoritesTableView] reverse:YES];
 
-        [self updateStyleForHeaderButton:[self favoritesButton] withImageName:@"heart" andImageSize:kFavoritesButtonImageSize andTintColor:[UIColor labelColor]];
+        [self updateStyleForHeaderButton:[self favoritesButton] withImageName:@"star" andImageSize:kFavoritesButtonImageSize andTintColor:[UIColor labelColor]];
     } else {
         NSArray* items = [[PasteboardManager sharedInstance] getItemsFromHistoryWithKey:kHistoryKeyFavorites];
         [[self favoritesTableView] reloadDataWithItems:items];
 
         [self showContentView:[self favoritesTableView] andHideContentView:[self historyTableView] reverse:NO];
 
-        [self updateStyleForHeaderButton:[self favoritesButton] withImageName:@"heart.fill" andImageSize:kFavoritesButtonImageSize andTintColor:[UIColor systemPinkColor]];
+        [self updateStyleForHeaderButton:[self favoritesButton] withImageName:@"star.fill" andImageSize:kFavoritesButtonImageSize andTintColor:[UIColor systemPinkColor]];
     }
 
     [self triggerHapticFeedbackWithStyle:UIImpactFeedbackStyleSoft];
@@ -234,9 +234,9 @@
     [self hide];
 
     NSString* key = [[self historyTableView] isHidden] ? kHistoryKeyFavorites : kHistoryKeyHistory;
-    UIAlertController* clearAlert = [UIAlertController alertControllerWithTitle:@"Kayoko" message:[NSString stringWithFormat:@"This will clear your %@.", key] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* clearAlert = [UIAlertController alertControllerWithTitle:@"Kayoko" message:[NSString stringWithFormat:@"这将清空剪切板", key] preferredStyle:UIAlertControllerStyleAlert];
 
-    UIAlertAction* yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* action) {
+    UIAlertAction* yesAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* action) {
         NSArray* items = [[PasteboardManager sharedInstance] getItemsFromHistoryWithKey:key];
         for (NSDictionary* dictionary in items) {
             PasteboardItem* item = [PasteboardItem itemFromDictionary:dictionary];
@@ -246,7 +246,7 @@
         [self show];
 	}];
 
-	UIAlertAction* noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action) {
+	UIAlertAction* noAction = [UIAlertAction actionWithTitle:@"不" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action) {
         [self show];
     }];
 

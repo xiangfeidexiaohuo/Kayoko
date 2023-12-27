@@ -23,7 +23,7 @@
         [[PasteboardManager sharedInstance] removePasteboardItem:item fromHistoryWithKey:kHistoryKeyFavorites shouldRemoveImage:NO];
         completionHandler(YES);
     }];
-    [unfavoriteAction setImage:[UIImage systemImageNamed:@"heart.slash.fill"]];
+    [unfavoriteAction setImage:[UIImage systemImageNamed:@"star.slash.fill"]];
     [unfavoriteAction setBackgroundColor:[UIColor systemPinkColor]];
     [actions insertObject:unfavoriteAction atIndex:0];
 

@@ -9,16 +9,6 @@
 			<string>PSGroupCell</string>
 		</dict>
 		<dict>
-			<key>cellClass</key>
-			<string>SingleContactCell</string>
-			<key>DisplayName</key>
-			<string>Alexandra</string>
-			<key>Username</key>
-			<string>vyolit</string>
-			<key>height</key>
-			<integer>58</integer>
-		</dict>
-		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
@@ -110,7 +100,7 @@
 			<key>cell</key>
 			<string>PSLinkListCell</string>
 			<key>default</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>detail</key>
 			<string>PSListItemsController</string>
 			<key>defaults</key>
@@ -182,24 +172,6 @@
 			<key>action</key>
 			<string>resetPrompt</string>
 		</dict>
-
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Thanks to you and everyone who has helped in any way.</string>
-			<key>isStaticText</key>
-			<true />
-		</dict>
-		<dict>
- 			<key>cell</key>
- 			<string>PSLinkCell</string>
- 			<key>label</key>
- 			<string>Credits</string>
- 			<key>detail</key>
- 			<string>KayokoCreditsListController</string>
- 		</dict>
-
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -209,29 +181,13 @@
 			<true />
 		</dict>
 		<dict>
-			<key>cellClass</key>
-			<string>LinkCell</string>
-			<key>label</key>
-			<string>My Tweaks</string>
-			<key>subtitle</key>
-			<string>Check out my other work.</string>
-			<key>url</key>
-			<string>https://undressd.wtf/user/vyolit</string>
-			<key>height</key>
-			<integer>54</integer>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>LinkCell</string>
-			<key>label</key>
-			<string>Source Code</string>
-			<key>subtitle</key>
-			<string>Find it on my GitHub.</string>
-			<key>url</key>
-			<string>https://github.com/vyolit/Kayoko</string>
-			<key>height</key>
-			<integer>54</integer>
-		</dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Kayoko CN By zp and DaoDao</string>
+			<key>isStaticText</key>
+			<true />
+		</dict>		
 	</array>
 	<key>title</key>
 	<string>Kayoko</string>

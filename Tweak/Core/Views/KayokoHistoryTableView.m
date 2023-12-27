@@ -23,7 +23,7 @@
         [[PasteboardManager sharedInstance] removePasteboardItem:item fromHistoryWithKey:kHistoryKeyHistory shouldRemoveImage:NO];
         completionHandler(YES);
     }];
-    [favoriteAction setImage:[UIImage systemImageNamed:@"heart.fill"]];
+    [favoriteAction setImage:[UIImage systemImageNamed:@"star.fill"]];
     [favoriteAction setBackgroundColor:[UIColor systemPinkColor]];
     [actions insertObject:favoriteAction atIndex:0];
 

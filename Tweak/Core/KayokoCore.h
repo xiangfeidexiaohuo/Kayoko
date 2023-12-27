@@ -9,7 +9,7 @@
 #import "../../Manager/PasteboardManager.h"
 #import "Views/KayokoView.h"
 
-static CGFloat const kHeight = 420;
+static CGFloat const kHeight = 358;
 
 KayokoView* kayokoView;
 
