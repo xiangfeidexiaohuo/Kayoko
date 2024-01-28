@@ -1,6 +1,6 @@
 //
 //  SingleContactCell.m
-//  UNDRESSD Utils
+//  Akarii Utils
 //
 //  Created by Alexandra Aurora Göttlicher
 //
@@ -14,14 +14,15 @@
  * @param style
  * @param reuseIdentifier
  * @param specifier
+ *
+ * @return The cell.
  */
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier specifier:(PSSpecifier *)specifier {
 	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier specifier:specifier];
 
     if (self) {
-        [self setDisplayName:[specifier properties][@"DisplayName"]];
-        [self setUsername:[specifier properties][@"Username"]];
-
+        [self setDisplayName:[specifier propertyForKey:@"displayName"]];
+        [self setUsername:[specifier propertyForKey:@"username"]];
 
         [self setAvatarImageView:[[UIImageView alloc] init]];
 
@@ -46,7 +47,6 @@
             [[[self avatarImageView] heightAnchor] constraintEqualToConstant:43]
         ]];
 
-
         [self setDisplayNameLabel:[[UILabel alloc] init]];
         [[self displayNameLabel] setText:[self displayName]];
         [[self displayNameLabel] setFont:[UIFont systemFontOfSize:17 weight:UIFontWeightSemibold]];
@@ -59,7 +59,6 @@
             [[[self displayNameLabel] leadingAnchor] constraintEqualToAnchor:[[self avatarImageView] trailingAnchor] constant:8],
             [[[self displayNameLabel] trailingAnchor] constraintEqualToAnchor:[self trailingAnchor] constant:-16]
         ]];
-
 
         [self setUsernameLabel:[[UILabel alloc] init]];
         [[self usernameLabel] setText:[NSString stringWithFormat:@"@%@", [self username]]];
@@ -74,7 +73,6 @@
             [[[self usernameLabel] bottomAnchor] constraintEqualToAnchor:[[self avatarImageView] bottomAnchor] constant:-4]
         ]];
 
-
         [self setTapRecognizerView:[[UIView alloc] init]];
         [self addSubview:[self tapRecognizerView]];
 
@@ -85,7 +83,6 @@
             [[[self tapRecognizerView] trailingAnchor] constraintEqualToAnchor:[self trailingAnchor]],
             [[[self tapRecognizerView] bottomAnchor] constraintEqualToAnchor:[self bottomAnchor]]
         ]];
-
 
         [self setTap:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openUserProfile)]];
         [[self tapRecognizerView] addGestureRecognizer:[self tap]];
@@ -98,7 +95,7 @@
  * Fetches the url for the user's avatar.
  */
 - (void)fetchAvatarUrlWithCompletion:(void (^)(NSURL* avatarUrl))completion {
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.undressd.wtf/v1/user/%@", [self username]]];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.akarii.cafe/v1/user/%@", [self username]]];
 
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData* _Nullable data, NSURLResponse* _Nullable response, NSError* _Nullable error) {
         @try {
@@ -136,7 +133,7 @@
  * Opens the user's profile.
  */
 - (void)openUserProfile {
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://undressd.wtf/user/%@", [self username]]];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://akarii.cafe/user/%@", [self username]]];
     [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 }
 @end

@@ -1,6 +1,6 @@
 //
 //  LinkCell.h
-//  UNDRESSD Utils
+//  Akarii Utils
 //
 //  Created by Alexandra Aurora Göttlicher
 //
@@ -9,11 +9,12 @@
 #import <Preferences/PSSpecifier.h>
 
 @interface LinkCell : PSTableCell
-@property(nonatomic, retain)UILabel* label;
-@property(nonatomic, retain)UILabel* subtitleLabel;
-@property(nonatomic, retain)UIView* tapRecognizerView;
-@property(nonatomic, retain)UITapGestureRecognizer* tap;
-@property(nonatomic, retain)NSString* title;
-@property(nonatomic, retain)NSString* subtitle;
-@property(nonatomic, retain)NSString* url;
+@property(nonatomic)UILabel* label;
+@property(nonatomic)UILabel* subtitleLabel;
+@property(nonatomic)UIImageView* indicatorImageView;
+@property(nonatomic)UIView* tapRecognizerView;
+@property(nonatomic)UITapGestureRecognizer* tap;
+@property(nonatomic)NSString* title;
+@property(nonatomic)NSString* subtitle;
+@property(nonatomic)NSString* url;
 @end

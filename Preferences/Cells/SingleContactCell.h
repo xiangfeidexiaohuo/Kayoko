@@ -1,6 +1,6 @@
 //
 //  SingleContactCell.h
-//  UNDRESSD Utils
+//  Akarii Utils
 //
 //  Created by Alexandra Aurora Göttlicher
 //

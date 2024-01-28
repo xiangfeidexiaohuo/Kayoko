@@ -43,24 +43,13 @@
             [[[self iconImageView] leadingAnchor] constraintEqualToAnchor:[self leadingAnchor] constant:24]
         ]];
 
-
-        if (![[item imageName] isEqualToString:@""] || [item hasColor]) {
+        if (![[item imageName] isEqualToString:@""]) {
             [self setContentImageView:[[UIImageView alloc] init]];
 
-            if (![item hasColor]) {
-                UIImage* originalImage = [[PasteboardManager sharedInstance] getImageForItem:item];
-                // Save memory by scaling the image down in the history view.
-                UIImage* scaledImage = [ImageUtil getImageWithImage:originalImage scaledToSize:CGSizeMake(originalImage.size.width / 4, originalImage.size.height / 4)];
-                [[self contentImageView] setImage:scaledImage];
-            } else {
-                if ([[item content] hasPrefix:@"#"]) {
-                    [[self contentImageView] setBackgroundColor:[ColorUtil getColorFromHex:[item content]]];
-                } else if ([[item content] hasPrefix:@"rgb("]) {
-                    [[self contentImageView] setBackgroundColor:[ColorUtil getColorFromRgb:[item content]]];
-                } else if ([[item content] hasPrefix:@"rgba("]) {
-                    [[self contentImageView] setBackgroundColor:[ColorUtil getColorFromRgba:[item content]]];
-                }
-            }
+            UIImage* originalImage = [[PasteboardManager sharedInstance] getImageForItem:item];
+            // Save memory by scaling the image down in the history view.
+            UIImage* scaledImage = [ImageUtil getImageWithImage:originalImage scaledToSize:CGSizeMake(originalImage.size.width / 4, originalImage.size.height / 4)];
+            [[self contentImageView] setImage:scaledImage];
 
             [[self contentImageView] setContentMode:UIViewContentModeScaleAspectFill];
             [[self contentImageView] setClipsToBounds:YES];
@@ -76,7 +65,6 @@
             ]];
         }
 
-
         [self setHeaderLabel:[[UILabel alloc] init]];
         NSString* displayName = [[[objc_getClass("SBApplicationController") sharedInstance] applicationWithBundleIdentifier:[item bundleIdentifier]] displayName] ?: @"SpringBoard";
         [[self headerLabel] setText:displayName];
@@ -85,20 +73,20 @@
         [self addSubview:[self headerLabel]];
 
         [[self headerLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
-        if ([[item imageName] isEqualToString:@""] && ![item hasColor]) {
+        [NSLayoutConstraint activateConstraints:@[
+            [[[self headerLabel] topAnchor] constraintEqualToAnchor:[[self iconImageView] topAnchor] constant:1],
+            [[[self headerLabel] leadingAnchor] constraintEqualToAnchor:[[self iconImageView] trailingAnchor] constant:16]
+        ]];
+
+        if ([self contentImageView]) {
             [NSLayoutConstraint activateConstraints:@[
-                [[[self headerLabel] topAnchor] constraintEqualToAnchor:[[self iconImageView] topAnchor] constant:1],
-                [[[self headerLabel] leadingAnchor] constraintEqualToAnchor:[[self iconImageView] trailingAnchor] constant:16],
-                [[[self headerLabel] trailingAnchor] constraintEqualToAnchor:[self trailingAnchor] constant:-24]
+                [[[self headerLabel] trailingAnchor] constraintEqualToAnchor:[[self contentImageView] leadingAnchor] constant:-16]
             ]];
         } else {
             [NSLayoutConstraint activateConstraints:@[
-                [[[self headerLabel] topAnchor] constraintEqualToAnchor:[[self iconImageView] topAnchor] constant:1],
-                [[[self headerLabel] leadingAnchor] constraintEqualToAnchor:[[self iconImageView] trailingAnchor] constant:16],
-                [[[self headerLabel] trailingAnchor] constraintEqualToAnchor:[[self contentImageView] leadingAnchor] constant:-16]
+                [[[self headerLabel] trailingAnchor] constraintEqualToAnchor:[self trailingAnchor] constant:-24]
             ]];
         }
-
 
         [self setContentLabel:[[UILabel alloc] init]];
         [[self contentLabel] setText:[item content]];

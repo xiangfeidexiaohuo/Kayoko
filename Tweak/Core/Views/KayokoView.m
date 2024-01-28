@@ -24,7 +24,6 @@
         [[self layer] setShadowRadius:10];
         [[self layer] setShadowOpacity:0.5];
 
-
         [self setBlurEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular]];
         [self setBlurEffectView:[[UIVisualEffectView alloc] initWithEffect:[self blurEffect]]];
         [self addSubview:[self blurEffectView]];
@@ -37,7 +36,6 @@
             [[[self blurEffectView] bottomAnchor] constraintEqualToAnchor:[self bottomAnchor]]
         ]];
 
-
         [self setHeaderView:[[UIView alloc] init]];
         [self addSubview:[self headerView]];
 
@@ -49,14 +47,11 @@
             [[[self headerView] trailingAnchor] constraintEqualToAnchor:[self trailingAnchor]]
         ]];
 
-
         [self setPanGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGestureRecognizer:)]];
         [[self headerView] addGestureRecognizer:[self panGestureRecognizer]];
 
-
         [self setTapGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePreview)]];
         [[self headerView] addGestureRecognizer:[self tapGestureRecognizer]];
-
 
         [self setGrabber:[[_UIGrabber alloc] init]];
         [[self headerView] addSubview:[self grabber]];
@@ -66,7 +61,6 @@
             [[[self grabber] topAnchor] constraintEqualToAnchor:[[self headerView] topAnchor] constant:12],
             [[[self grabber] centerXAnchor] constraintEqualToAnchor:[[self headerView] centerXAnchor]]
         ]];
-
 
         [self setFavoritesButton:[[UIButton alloc] init]];
         [[self favoritesButton] addTarget:self action:@selector(handleFavoritesButtonPressed) forControlEvents:UIControlEventTouchUpInside];
@@ -78,7 +72,6 @@
             [[[self favoritesButton] bottomAnchor] constraintEqualToAnchor:[[self headerView] bottomAnchor] constant:-2],
             [[[self favoritesButton] leadingAnchor] constraintEqualToAnchor:[[self headerView] leadingAnchor] constant:24]
         ]];
-
 
         [self setTitleLabel:[[UILabel alloc] init]];
         [[self titleLabel] setText:@"历史"];
@@ -92,7 +85,6 @@
             [[[self titleLabel] leadingAnchor] constraintEqualToAnchor:[[self favoritesButton] trailingAnchor] constant:12]
         ]];
 
-
         [self setClearButton:[[UIButton alloc] init]];
         [[self clearButton] addTarget:self action:@selector(handleClearButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self updateStyleForHeaderButton:[self clearButton] withImageName:@"trash" andImageSize:kClearButtonImageSize andTintColor:[UIColor labelColor]];
@@ -104,7 +96,6 @@
             [[[self clearButton] trailingAnchor] constraintEqualToAnchor:[[self headerView] trailingAnchor] constant:-24]
         ]];
 
-
         [self setHistoryTableView:[[KayokoHistoryTableView alloc] initWithName:@"历史"]];
         [self addSubview:[self historyTableView]];
 
@@ -115,7 +106,6 @@
             [[[self historyTableView] trailingAnchor] constraintEqualToAnchor:[self trailingAnchor]],
             [[[self historyTableView] bottomAnchor] constraintEqualToAnchor:[self bottomAnchor]]
         ]];
-
 
         [self setFavoritesTableView:[[KayokoFavoritesTableView alloc] initWithName:@"收藏"]];
         [[self favoritesTableView] setHidden:YES];
@@ -130,7 +120,6 @@
             [[[self favoritesTableView] trailingAnchor] constraintEqualToAnchor:[self trailingAnchor]],
             [[[self favoritesTableView] bottomAnchor] constraintEqualToAnchor:[self bottomAnchor]]
         ]];
-
 
         [self setPreviewView:[[KayokoPreviewView alloc] initWithName:@"预览"]];
         [[self previewView] setHidden:YES];
@@ -307,7 +296,6 @@
     [UIView transitionWithView:[self titleLabel] duration:0.1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         [[self titleLabel] setText:[viewToShow valueForKey:@"_name"]];
     } completion:nil];
-
 
     CGFloat viewToShowTransform = reverse ? 10 : -10;
     [viewToShow setTransform:CGAffineTransformTranslate(viewToShow.transform, 0, viewToShowTransform)];

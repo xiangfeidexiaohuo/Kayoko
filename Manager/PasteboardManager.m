@@ -107,9 +107,7 @@
         kItemKeyBundleIdentifier: [item bundleIdentifier] ?: @"com.apple.springboard",
         kItemKeyContent: [item content] ?: @"",
         kItemKeyImageName: [item imageName] ?: @"",
-        kItemKeyHasPlainText: @([item hasPlainText]),
-        kItemKeyHasLink: @([item hasLink]),
-        kItemKeyHasColor: @([item hasColor])
+        kItemKeyHasLink: @([item hasLink])
     } atIndex:0];
 
     // Truncate the history corresponding the set limit.

@@ -1,6 +1,8 @@
 .DS_Store
-.theos
+.theos/
+.vscode/
 packages/
 .vscode
 Manager/.stamp
 Utils/.stamp
+

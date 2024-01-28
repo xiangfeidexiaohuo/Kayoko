@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "../../../Manager/PasteboardManager.h"
 #import "../../../Utils/ImageUtil.h"
-#import "../../../Utils/ColorUtil.h"
 
 @interface KayokoTableViewCell : UITableViewCell
 @property(nonatomic)UIImageView* iconImageView;

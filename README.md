@@ -13,7 +13,7 @@ iPhone, iPad (partially) and iPod touch running iOS/iPadOS 14-15.
 
 ## Compiling
   - [Theos](https://theos.dev/) is required to compile the project
-  - Edit the root `Makefile` to use your Theos SDK and toolchain
+  - Edit the root `Makefile` to use your Theos SDK
 
 ## License
 [GPL-3.0](https://github.com/vyolit/Kayoko/blob/main/COPYING)
