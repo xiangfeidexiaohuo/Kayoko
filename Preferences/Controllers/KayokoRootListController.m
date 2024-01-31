@@ -7,6 +7,29 @@
 
 #include "KayokoRootListController.h"
 
+#import "rootless.h"
+
+extern NSBundle *KayokoBundle();
+
+static inline NSString *LOC(NSString *key) {
+    NSBundle *tweakBundle = KayokoBundle();
+    return [tweakBundle localizedStringForKey:key value:nil table:nil];
+}
+
+NSBundle *KayokoBundle() {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+        NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"KayokoPreferences" ofType:@"bundle"];
+        if (tweakBundlePath)
+            bundle = [NSBundle bundleWithPath:tweakBundlePath];
+        else
+            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS(@"/Library/PreferenceBundles/KayokoPreferences.bundle")];
+    });
+    return bundle;
+}
+
+
 @implementation KayokoRootListController
 /**
  * Loads the root specifiers.
@@ -53,13 +76,13 @@
  * Prompts the user to respring to apply changes.
  */
 - (void)promptToRespring {
-    UIAlertController* resetAlert = [UIAlertController alertControllerWithTitle:@"Kayoko" message:@"此选项会注销设备，现在注销吗？\n\n🇨🇳妖刀" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* resetAlert = [UIAlertController alertControllerWithTitle:@"Kayoko" message:LOC(@"CHOOSE_TEXT") preferredStyle:UIAlertControllerStyleAlert];
 
-    UIAlertAction* yesAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+    UIAlertAction* yesAction = [UIAlertAction actionWithTitle:LOC(@"YES_TEXT") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
         [self respring];
 	}];
 
-	UIAlertAction* noAction = [UIAlertAction actionWithTitle:@"不" style:UIAlertActionStyleCancel handler:nil];
+	UIAlertAction* noAction = [UIAlertAction actionWithTitle:LOC(@"NO_TEXT") style:UIAlertActionStyleCancel handler:nil];
 
 	[resetAlert addAction:yesAction];
 	[resetAlert addAction:noAction];
@@ -81,13 +104,13 @@
  * Prompts the user to reset their preferences.
  */
 - (void)resetPrompt {
-    UIAlertController* resetAlert = [UIAlertController alertControllerWithTitle:@"Kayoko" message:@"确定要重置插件设置吗？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* resetAlert = [UIAlertController alertControllerWithTitle:@"Kayoko" message:LOC(@"RESET_TEXT") preferredStyle:UIAlertControllerStyleAlert];
 
-    UIAlertAction* yesAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+    UIAlertAction* yesAction = [UIAlertAction actionWithTitle:LOC(@"YES_TEXT") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
         [self resetPreferences];
 	}];
 
-	UIAlertAction* noAction = [UIAlertAction actionWithTitle:@"不" style:UIAlertActionStyleCancel handler:nil];
+	UIAlertAction* noAction = [UIAlertAction actionWithTitle:LOC(@"NO_TEXT") style:UIAlertActionStyleCancel handler:nil];
 
 	[resetAlert addAction:yesAction];
 	[resetAlert addAction:noAction];

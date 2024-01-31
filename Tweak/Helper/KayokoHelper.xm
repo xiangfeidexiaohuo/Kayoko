@@ -7,6 +7,29 @@
 
 #import "KayokoHelper.h"
 
+#import "rootless.h"
+
+extern NSBundle *Kayoko2Bundle();
+
+static inline NSString *LOC(NSString *key) {
+    NSBundle *tweakBundle = Kayoko2Bundle();
+    return [tweakBundle localizedStringForKey:key value:nil table:nil];
+}
+
+NSBundle *Kayoko2Bundle() {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+        NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"KayokoPreferences" ofType:@"bundle"];
+        if (tweakBundlePath)
+            bundle = [NSBundle bundleWithPath:tweakBundlePath];
+        else
+            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS(@"/Library/PreferenceBundles/KayokoPreferences.bundle")];
+    });
+    return bundle;
+}
+
+
 #pragma mark - UIKeyboardAutocorrectionController class hooks
 
 /**
@@ -49,7 +72,7 @@ static void override_UIKeyboardAutocorrectionController_setAutocorrectionList(UI
  * @return The list of custom items.
  */
 static TIAutocorrectionList* createAutocorrectionList() {
-    NSArray* labels = @[@"历史", @"复制", @"粘贴"];
+    NSArray* labels = @[LOC(@"HISTORY_TEXT"), LOC(@"COPY_TEXT"), LOC(@"PASTE_TEXT")];
     NSMutableArray* candidates = [[NSMutableArray alloc] init];
     for (NSString* label in labels) {
         TIZephyrCandidate* candidate = [[objc_getClass("TIZephyrCandidate") alloc] init];
@@ -74,9 +97,9 @@ static TIAutocorrectionList* createAutocorrectionList() {
 static void (* orig_UIPredictionViewController_predictionView_didSelectCandidate)(UIPredictionViewController* self, SEL _cmd, TUIPredictionView* predictionView, TIZephyrCandidate* candidate);
 static void override_UIPredictionViewController_predictionView_didSelectCandidate(UIPredictionViewController* self, SEL _cmd, TUIPredictionView* predictionView, TIZephyrCandidate* candidate) {
     if ([candidate respondsToSelector:@selector(fromBundleId)] && [[candidate fromBundleId] isEqualToString:@"codes.aurora.kayoko"]) {
-        if ([[candidate label] isEqualToString:@"历史"]) {
+        if ([[candidate label] isEqualToString:LOC(@"HISTORY_TEXT")]) {
             CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)kNotificationKeyCoreShow, nil, nil, YES);
-        } else if ([[candidate label] isEqualToString:@"复制"]) {
+        } else if ([[candidate label] isEqualToString:LOC(@"COPY_TEXT")]) {
             if (@available(iOS 15.0, *)) {
                 UIKBInputDelegateManager* delegateManager = [[objc_getClass("UIKeyboardImpl") activeInstance] inputDelegateManager];
                 UITextRange* range = [delegateManager selectedTextRange];
@@ -94,7 +117,7 @@ static void override_UIPredictionViewController_predictionView_didSelectCandidat
                     [[UIPasteboard generalPasteboard] setString:text];
                 }
             }
-        } else if ([[candidate label] isEqualToString:@"粘贴"]) {
+        } else if ([[candidate label] isEqualToString:LOC(@"PASTE_TEXT")]) {
             paste();
         }
     } else {

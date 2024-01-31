@@ -1,0 +1,14 @@
+{ 
+  "CHOOSE_TEXT"="此选项会注销设备，现在注销吗？";
+  "YES_TEXT"="是";
+  "NO_TEXT"="不";
+  "RESET_TEXT"="确定要重置插件设置吗？";
+  
+  "HISTORY_TEXT"="历史";
+  "FAVORITES_TEXT"="收藏";
+  "PREVIEW_TEXT"="预览";
+  "CLEAN_ALL_TEXT"="这将清空剪切板";
+  
+  "COPY_TEXT"="复制";
+  "PASTE_TEXT"="粘贴";
+}

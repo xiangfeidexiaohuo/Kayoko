@@ -7,6 +7,28 @@
 
 #import "KayokoView.h"
 
+#import "rootless.h"
+
+extern NSBundle *Kayoko1Bundle();
+
+static inline NSString *LOC(NSString *key) {
+    NSBundle *tweakBundle = Kayoko1Bundle();
+    return [tweakBundle localizedStringForKey:key value:nil table:nil];
+}
+
+NSBundle *Kayoko1Bundle() {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+        NSString *tweakBundlePath = [[NSBundle mainBundle] pathForResource:@"KayokoPreferences" ofType:@"bundle"];
+        if (tweakBundlePath)
+            bundle = [NSBundle bundleWithPath:tweakBundlePath];
+        else
+            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS(@"/Library/PreferenceBundles/KayokoPreferences.bundle")];
+    });
+    return bundle;
+}
+
 @implementation KayokoView
 /**
  * Initializes the main view.
@@ -74,7 +96,7 @@
         ]];
 
         [self setTitleLabel:[[UILabel alloc] init]];
-        [[self titleLabel] setText:@"历史"];
+        [[self titleLabel] setText:LOC(@"HISTORY_TEXT")];
         [[self titleLabel] setFont:[UIFont systemFontOfSize:26 weight:UIFontWeightSemibold]];
         [[self titleLabel] setTextColor:[UIColor labelColor]];
         [[self headerView] addSubview:[self titleLabel]];
@@ -96,7 +118,7 @@
             [[[self clearButton] trailingAnchor] constraintEqualToAnchor:[[self headerView] trailingAnchor] constant:-24]
         ]];
 
-        [self setHistoryTableView:[[KayokoHistoryTableView alloc] initWithName:@"历史"]];
+        [self setHistoryTableView:[[KayokoHistoryTableView alloc] initWithName:LOC(@"HISTORY_TEXT")]];
         [self addSubview:[self historyTableView]];
 
         [[self historyTableView] setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -107,7 +129,7 @@
             [[[self historyTableView] bottomAnchor] constraintEqualToAnchor:[self bottomAnchor]]
         ]];
 
-        [self setFavoritesTableView:[[KayokoFavoritesTableView alloc] initWithName:@"收藏"]];
+        [self setFavoritesTableView:[[KayokoFavoritesTableView alloc] initWithName:LOC(@"FAVORITES_TEXT")]];
         [[self favoritesTableView] setHidden:YES];
         [self addSubview:[self favoritesTableView]];
 
@@ -121,7 +143,7 @@
             [[[self favoritesTableView] bottomAnchor] constraintEqualToAnchor:[self bottomAnchor]]
         ]];
 
-        [self setPreviewView:[[KayokoPreviewView alloc] initWithName:@"预览"]];
+        [self setPreviewView:[[KayokoPreviewView alloc] initWithName:LOC(@"PREVIEW_TEXT")]];
         [[self previewView] setHidden:YES];
         [self addSubview:[self previewView]];
 
@@ -223,9 +245,9 @@
     [self hide];
 
     NSString* key = [[self historyTableView] isHidden] ? kHistoryKeyFavorites : kHistoryKeyHistory;
-    UIAlertController* clearAlert = [UIAlertController alertControllerWithTitle:@"Kayoko" message:[NSString stringWithFormat:@"这将清空剪切板", key] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* clearAlert = [UIAlertController alertControllerWithTitle:@"Kayoko" message:[NSString stringWithFormat:LOC(@"CLEAN_ALL_TEXT"), key] preferredStyle:UIAlertControllerStyleAlert];
 
-    UIAlertAction* yesAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* action) {
+    UIAlertAction* yesAction = [UIAlertAction actionWithTitle:LOC(@"YES_TEXT") style:UIAlertActionStyleDestructive handler:^(UIAlertAction* action) {
         NSArray* items = [[PasteboardManager sharedInstance] getItemsFromHistoryWithKey:key];
         for (NSDictionary* dictionary in items) {
             PasteboardItem* item = [PasteboardItem itemFromDictionary:dictionary];
@@ -235,7 +257,7 @@
         [self show];
 	}];
 
-	UIAlertAction* noAction = [UIAlertAction actionWithTitle:@"不" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action) {
+	UIAlertAction* noAction = [UIAlertAction actionWithTitle:LOC(@"NO_TEXT") style:UIAlertActionStyleCancel handler:^(UIAlertAction* action) {
         [self show];
     }];
 

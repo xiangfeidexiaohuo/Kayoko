@@ -1,0 +1,14 @@
+{ 
+  "CHOOSE_TEXT"="This option requires a respring to apply. Do you want to respring now?";
+  "YES_TEXT"="Yes";
+  "NO_TEXT"="No";
+  "RESET_TEXT"="Are you sure you want to reset your preferences?";
+  
+  "HISTORY_TEXT"="History";
+  "FAVORITES_TEXT"="Favorites";
+  "PREVIEW_TEXT"="Preview";
+  "CLEAN_ALL_TEXT"="This will clear your %@.";
+  
+  "COPY_TEXT"="Copy";
+  "PASTE_TEXT"="Paste";
+}

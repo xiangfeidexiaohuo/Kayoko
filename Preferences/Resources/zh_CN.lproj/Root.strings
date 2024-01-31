@@ -18,12 +18,11 @@
 "History"="剪切板历史";
 "I got a Ko-fi"="给作者捐赠";
 "It's on GitHub"="源码在GitHub";
-"Find it on my GitHub."="源码在GitHub";
+"Find it on my GitHub."="源码托管在GitHub";
 "My Tweaks"="其他插件";
 "Check out my other work."="看看我的其他作品";
 "Kayoko by Traurige"="Kayoko(剪切板)开发者:Traurige\n\n🇨🇳中文:妖刀";
-"Kayoko by Alexandra Aurora Göttlicher"="Kayoko 由 Alexandra Aurora Göttlicher 制作";
-"Kayoko CN By zp and DaoDao"="🇨🇳中文版由真皮和刀刀制作";
+"Kayoko by Alexandra Aurora Göttlicher"="Kayoko 由 Alexandra Aurora Göttlicher 构建";
 "Maximum Amount"="最大数量";
 "Wishing on a star..."="对着星星许愿...";
 "Play Haptic Feedback"="振动反馈";
@@ -33,7 +32,7 @@
 "Respring"="注销设备";
 "Save Images"="保存图片";
 "Save Text"="保存文本";
-"Source Code"="开源项目";
+"Source Code"="项目开源";
 "Submit an issue"="提交问题";
 "Thanks to you and everyone who has helped in any way."="感谢您和所有以任何方式提供帮助的人";
 "The \"Prediction Bar\" method displays custom suggestions on the \"More Keyboard Keyplane\" (123)."="\"预测栏\"方式在仅在原生英文键盘且开启\"输入预测\"且切换到数字符号键盘时，在键盘最上方显示：\n\"历史\"、\"复制\"、\"粘贴\"三个按钮。\n国内用户直接选择\"听写键\"方式。";
