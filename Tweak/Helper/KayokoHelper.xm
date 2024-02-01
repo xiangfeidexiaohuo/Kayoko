@@ -7,7 +7,7 @@
 
 #import "KayokoHelper.h"
 
-#import "rootless.h"
+#import <roothide.h>
 
 extern NSBundle *Kayoko2Bundle();
 
@@ -24,7 +24,7 @@ NSBundle *Kayoko2Bundle() {
         if (tweakBundlePath)
             bundle = [NSBundle bundleWithPath:tweakBundlePath];
         else
-            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS(@"/Library/PreferenceBundles/KayokoPreferences.bundle")];
+            bundle = [NSBundle bundleWithPath:jbroot(@"/Library/PreferenceBundles/KayokoPreferences.bundle")];
     });
     return bundle;
 }
@@ -275,7 +275,7 @@ static void paste() {
  * Loads the user's preferences.
  */
 static void load_preferences() {
-    preferences = [[NSUserDefaults alloc] initWithSuiteName:[NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", kPreferencesIdentifier]];
+    preferences = [[NSUserDefaults alloc] initWithSuiteName:[NSString stringWithFormat:jbroot(@"/var/mobile/Library/Preferences/%@.plist"), kPreferencesIdentifier]];
     libSandy_applyProfile("Kayoko");
 
     [preferences registerDefaults:@{

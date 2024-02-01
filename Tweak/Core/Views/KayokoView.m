@@ -7,7 +7,7 @@
 
 #import "KayokoView.h"
 
-#import "rootless.h"
+#import <roothide.h>
 
 extern NSBundle *Kayoko1Bundle();
 
@@ -24,7 +24,7 @@ NSBundle *Kayoko1Bundle() {
         if (tweakBundlePath)
             bundle = [NSBundle bundleWithPath:tweakBundlePath];
         else
-            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS(@"/Library/PreferenceBundles/KayokoPreferences.bundle")];
+            bundle = [NSBundle bundleWithPath:jbroot(@"/Library/PreferenceBundles/KayokoPreferences.bundle")];
     });
     return bundle;
 }

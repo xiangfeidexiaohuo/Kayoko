@@ -5,7 +5,7 @@
 //  Created by Alexandra Aurora Göttlicher
 //
 
-#import <rootless.h>
+#import <roothide.h>
 #import <UIKit/UIKit.h>
 #import "KayokoHistoryTableView.h"
 #import "KayokoFavoritesTableView.h"

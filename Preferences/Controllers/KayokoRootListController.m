@@ -7,7 +7,7 @@
 
 #include "KayokoRootListController.h"
 
-#import "rootless.h"
+#import <roothide.h>
 
 extern NSBundle *KayokoBundle();
 
@@ -24,7 +24,7 @@ NSBundle *KayokoBundle() {
         if (tweakBundlePath)
             bundle = [NSBundle bundleWithPath:tweakBundlePath];
         else
-            bundle = [NSBundle bundleWithPath:ROOT_PATH_NS(@"/Library/PreferenceBundles/KayokoPreferences.bundle")];
+            bundle = [NSBundle bundleWithPath:jbroot(@"/Library/PreferenceBundles/KayokoPreferences.bundle")];
     });
     return bundle;
 }
@@ -95,7 +95,7 @@ NSBundle *KayokoBundle() {
  */
 - (void)respring {
 	NSTask* task = [[NSTask alloc] init];
-	[task setLaunchPath:ROOT_PATH_NS(@"/usr/bin/killall")];
+	[task setLaunchPath:jbroot(@"/usr/bin/killall")];
 	[task setArguments:@[@"backboardd"]];
 	[task launch];
 }
